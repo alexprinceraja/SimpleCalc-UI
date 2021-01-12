@@ -2,7 +2,7 @@
   <h1>Simple Calculator</h1>
   <div class="row">
     <div class="col">
-      <input type="text" [(ngModel)]="first" name="sumFirstValidation" #sumFirstValidation="ngModel"
+      <input type="text" [(ngModel)]="first" name="firstValidation" #firstValidation="ngModel"
         pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
     </div>
 
@@ -15,11 +15,11 @@
       </select>
     </div>
     <div class="col">
-      <input type="text" [(ngModel)]="second" name="sumSecondValidation" #sumSecondValidation="ngModel"
+      <input type="text" [(ngModel)]="second" name="secondValidation" #secondValidation="ngModel"
         pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
     </div>
     <div class="col">
-      <button [disabled]="!sumFirstValidation.valid || !sumSecondValidation.valid"
+      <button [disabled]="!firstValidation.valid || !secondValidation.valid"
         (click)="calculate()">=</button>
     </div>
     <div *ngIf="result" class="col">
@@ -28,11 +28,11 @@
   </div>
 
   <div class="row">
-    <div [hidden]="sumFirstValidation.valid || sumFirstValidation.pristine">
+    <div [hidden]="firstValidation.valid || firstValidation.pristine">
       This number is invalid.</div>
-    <p *ngIf="sumFirstValidation?.errors?.pattern">
+    <p *ngIf="firstValidation?.errors?.pattern">
       Only number characters are allowed.</p>
-    <p *ngIf="sumFirstValidation?.errors?.minlength">
+    <p *ngIf="firstValidation?.errors?.minlength">
       This entry must have at least one characters.</p> <br>
   </div>
 
