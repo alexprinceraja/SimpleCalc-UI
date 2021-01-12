@@ -1,0 +1,45 @@
+<div >
+  <h1>Simple Calculator</h1>
+  <div class="row">
+    <div class="col">
+      <input type="text" [(ngModel)]="first" name="sumFirstValidation" #sumFirstValidation="ngModel"
+        pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
+    </div>
+
+    <div class="col">
+      <select [(ngModel)]="operation">
+        <option value="add">add</option>
+        <option value="subtract">subtract</option>
+        <option value="multiply">multiply</option>
+        <option value="divide">divide</option>
+      </select>
+    </div>
+    <div class="col">
+      <input type="text" [(ngModel)]="second" name="sumSecondValidation" #sumSecondValidation="ngModel"
+        pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
+    </div>
+    <div class="col">
+      <button [disabled]="!sumFirstValidation.valid || !sumSecondValidation.valid"
+        (click)="calculate()">=</button>
+    </div>
+    <div *ngIf="result" class="col">
+      <p>Result is: </p><b>{{result }}</b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div [hidden]="sumFirstValidation.valid || sumFirstValidation.pristine">
+      This number is invalid.</div>
+    <p *ngIf="sumFirstValidation?.errors?.pattern">
+      Only number characters are allowed.</p>
+    <p *ngIf="sumFirstValidation?.errors?.minlength">
+      This entry must have at least one characters.</p> <br>
+  </div>
+
+  <div class="row">
+    <button (click)="historyDetails()">Show History</button>
+    <div *ngFor="let hist of calcHistory">
+      {{hist.input1}} {{hist.operator}} {{hist.input2}} = {{hist.result}}
+    </div>
+  </div>
+</div>
