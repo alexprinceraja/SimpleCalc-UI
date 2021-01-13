@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   }
   //  getter for easy access to form fields
   get f() { return this.simpleCalculatorForm.controls; }
-  
+
   // Calculate method, receive an input from UI and pass it to backend and get a response back
   Calculate() {
     this.submitted = true;
@@ -61,10 +61,9 @@ export class AppComponent implements OnInit {
     this.result = '';
     this.simpleCalculatorForm.reset();
   }
-  
+
   // method is implemented to fetch a history details from backend 
   showHistory() {
-    this.submitted = false;
     this.service.getHistory().subscribe(data => {
       this.calcHistory = data;
     })
