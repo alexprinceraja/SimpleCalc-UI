@@ -2,7 +2,7 @@
   <h1>Simple Calculator</h1>
   <div class="row">
     <div class="col">
-      <input type="text" [(ngModel)]="first" name="firstValidation" #firstValidation="ngModel"
+      <input type="text" [(ngModel)]="first" placeholder = "Your First Input" name="firstValidation" #firstValidation="ngModel"
         pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
     </div>
 
@@ -15,7 +15,7 @@
       </select>
     </div>
     <div class="col">
-      <input type="text" [(ngModel)]="second" name="secondValidation" #secondValidation="ngModel"
+      <input type="text" [(ngModel)]="second" placeholder = "Your Second Input" name="secondValidation" #secondValidation="ngModel"
         pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
     </div>
     <div class="col">
@@ -28,14 +28,21 @@
   </div>
 
   <div class="row">
-    <div [hidden]="firstValidation.valid || firstValidation.pristine">
+    <div [hidden]="firstValidation.valid">
       This number is invalid.</div>
     <p *ngIf="firstValidation?.errors?.pattern">
       Only number characters are allowed.</p>
     <p *ngIf="firstValidation?.errors?.minlength">
       This entry must have at least one characters.</p> <br>
   </div>
-
+  <div class="row">
+    <div [hidden]="secondValidation.valid">
+      This number is invalid.</div>
+    <p *ngIf="secondValidation?.errors?.pattern">
+      Only number characters are allowed.</p>
+    <p *ngIf="secondValidation?.errors?.minlength">
+      This entry must have at least one characters.</p> <br>
+  </div>
   <div class="row">
     <button (click)="historyDetails()">Show History</button>
     <div *ngFor="let hist of calcHistory">
