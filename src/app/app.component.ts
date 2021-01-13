@@ -1,39 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Calculator } from './calcModel';
 import { CalculatorserviceService } from './calculatorservice.service';
 
-@Component({  
+@Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private service : CalculatorserviceService) { }
+  result: any = "";
+  calcHistory: Calculator[] = [];
+  submitted = false;
+  simpleCalculatorForm: FormGroup = new FormGroup({
+  });
 
-  title = 'simple-calculator-ui';
-  first: string ="";
-  second: string = "";
-  result: any ="";
-  operation = "add";
-  errorFlag:boolean=false;
-  calcHistory: Calculator[]=[];
+  constructor(private service: CalculatorserviceService, private formBuilder: FormBuilder) { }
 
-  calculate() {
-    this.service.sendGETRequestWithParameters(this.operation, this.first, this.second).subscribe(data=>{
-        this.result = data;
-      },
-      error =>{
-        this.errorFlag=true;
-        console.log(error)
+  ngOnInit() {
+    this.simpleCalculatorForm = this.formBuilder.group({
+      operator: ['', Validators.required],
+      firstValue: ['', Validators.required],
+      secondValue: ['', Validators.required],
+      output: []
+    });
+  }
+  //  getter for easy access to form fields
+  get f() { return this.simpleCalculatorForm.controls; }
+  
+  // Calculate method, receive an input from UI and pass it to backend and get a response back
+  Calculate() {
+    this.submitted = true;
+    // if form is invalid, flow will stop here 
+    if (this.simpleCalculatorForm.invalid) {
+      return;
+    }
+    this.service.calculateRequestGeneration(this.simpleCalculatorForm.value.operator, this.simpleCalculatorForm.value.firstValue, this.simpleCalculatorForm.value.secondValue).subscribe(data => {
+      this.simpleCalculatorForm.value.output = data;
+      this.result = this.simpleCalculatorForm.value.output
+    },
+      error => {
         this.result = error.error.message;
-        
       }
-      )
+    )
+  }
+
+  // method is used to allow digits on screen 
+  onlyDigits(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
     }
-    historyDetails(){
-      this.service.getHistory().subscribe(data=>{
-        this.calcHistory=data;
-      })
-    }
+    return true;
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.calcHistory = [];
+    this.result = '';
+    this.simpleCalculatorForm.reset();
+  }
+  
+  // method is implemented to fetch a history details from backend 
+  showHistory() {
+    this.submitted = false;
+    this.service.getHistory().subscribe(data => {
+      this.calcHistory = data;
+    })
+  }
 }

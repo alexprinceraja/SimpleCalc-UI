@@ -1,52 +1,53 @@
-<div >
-  <h1>Simple Calculator</h1>
-  <div class="row">
-    <div class="col">
-      <input type="text" [(ngModel)]="first" placeholder = "Your First Input" name="firstValidation" #firstValidation="ngModel"
-        pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
-    </div>
+<div class="card m-3">
+  <h5 class="card-header">Simple Calculator</h5>
+  <div class="card-body">
+      <form [formGroup]="simpleCalculatorForm">
+          <div class="form-row">
 
-    <div class="col">
-      <select [(ngModel)]="operation">
-        <option value="add">add</option>
-        <option value="subtract">subtract</option>
-        <option value="multiply">multiply</option>
-        <option value="divide">divide</option>
-      </select>
-    </div>
-    <div class="col">
-      <input type="text" [(ngModel)]="second" placeholder = "Your Second Input" name="secondValidation" #secondValidation="ngModel"
-        pattern="[-+]?[0-9]*[.,]?[0-9]+" minlength="1">
-    </div>
-    <div class="col">
-      <button [disabled]="!firstValidation.valid || !secondValidation.valid"
-        (click)="calculate()">=</button>
-    </div>
-    <div *ngIf="result" class="col">
-      <p>Result is: </p><b>{{result }}</b>
-    </div>
-  </div>
+              <div class="form-group col-4">
+                  <label>First Value</label>
+                  <input type="text" formControlName="firstValue" (keypress)="onlyDigits($event)" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.firstValue.errors }" />
+                  <div *ngIf="submitted && f.firstValue.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstValue.errors.required">Value is required</div>
+                  </div>
+              </div>
+              <div class="form-group co1-2">
+                  <label>Operator</label>
+                  <select formControlName="operator" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.operator.errors }">
+                      <option value=""></option>
+                      <option value="add">+</option>
+                      <option value="subtract">-</option>
+                      <option value="multiply">*</option>
+                      <option value="divide">/</option>
+                  </select>
+                  <div *ngIf="submitted && f.operator.errors" class="invalid-feedback">
+                      <div *ngIf="f.operator.errors.required">Operator is required</div>
+                  </div>
+              </div>
+              <div class="form-group col-4">
+                  <label>Second Value</label>
+                  <input type="text" formControlName="secondValue" (keypress)="onlyDigits($event)"
+                      class="form-control" [ngClass]="{ 'is-invalid': submitted && f.secondValue.errors }" />
+                  <div *ngIf="submitted && f.secondValue.errors" class="invalid-feedback">
+                      <div *ngIf="f.secondValue.errors.required">Value is required</div>
+                  </div>
+              </div>
+              <div class="form-group col-2 text-center">
+                  <br> 
+                  <label><b>{{ result }}</b></label>
+              </div>
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary mr-1" (click)="Calculate()">Calculate</button>
+              <button class="btn btn-primary mr-2" (click)="showHistory()">History</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">Reset</button>
 
-  <div class="row">
-    <div [hidden]="firstValidation.valid">
-      This number is invalid.</div>
-    <p *ngIf="firstValidation?.errors?.pattern">
-      Only number characters are allowed.</p>
-    <p *ngIf="firstValidation?.errors?.minlength">
-      This entry must have at least one characters.</p> <br>
-  </div>
-  <div class="row">
-    <div [hidden]="secondValidation.valid">
-      This number is invalid.</div>
-    <p *ngIf="secondValidation?.errors?.pattern">
-      Only number characters are allowed.</p>
-    <p *ngIf="secondValidation?.errors?.minlength">
-      This entry must have at least one characters.</p> <br>
-  </div>
-  <div class="row">
-    <button (click)="historyDetails()">Show History</button>
-    <div *ngFor="let hist of calcHistory">
-      {{hist.input1}} {{hist.operator}} {{hist.input2}} = {{hist.result}}
-    </div>
+          </div>
+          <div *ngFor="let hist of calcHistory" class="text-center">
+              {{hist.input1}} {{hist.operator}} {{hist.input2}} = {{hist.result}}
+          </div>
+      </form>
   </div>
 </div>
