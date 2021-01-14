@@ -1,4 +1,4 @@
-<div class="card m-3">
+<div class="card m-5">
   <h5 class="card-header">Simple Calculator</h5>
   <div class="card-body">
     <form [formGroup]="simpleCalculatorForm">
@@ -7,39 +7,39 @@
         <div class="form-group col-5">
           <label>First Value</label>
           <input type="text" formControlName="firstValue" (keypress)="onlyDigits($event)" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.firstValue.errors }" />
-          <div *ngIf="submitted && f.firstValue.errors" class="invalid-feedback">
+            [ngClass]="{ 'is-invalid': isSubmitted && f.firstValue.errors }" />
+          <div *ngIf="isSubmitted && f.firstValue.errors" class="invalid-feedback">
             <div *ngIf="f.firstValue.errors.required">Value is required</div>
           </div>
         </div>
-        <div class="form-group co1">
+        <div class="form-group co1-1">
           <label>Operator</label>
           <select formControlName="operator" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.operator.errors }">
+            [ngClass]="{ 'is-invalid': isSubmitted && f.operator.errors }">
             <option value=""></option>
             <option value="add">+</option>
             <option value="subtract">-</option>
             <option value="multiply">*</option>
             <option value="divide">/</option>
           </select>
-          <div *ngIf="submitted && f.operator.errors" class="invalid-feedback">
+          <div *ngIf="isSubmitted && f.operator.errors" class="invalid-feedback">
             <div *ngIf="f.operator.errors.required">Operator is required</div>
           </div>
         </div>
-        <div class="form-group col-5">
+        <div class="form-group col-6">
           <label>Second Value</label>
           <input type="text" formControlName="secondValue" (keypress)="onlyDigits($event)" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.secondValue.errors }" />
-          <div *ngIf="submitted && f.secondValue.errors" class="invalid-feedback">
+            [ngClass]="{ 'is-invalid': isSubmitted && f.secondValue.errors }" />
+          <div *ngIf="isSubmitted && f.secondValue.errors" class="invalid-feedback">
             <div *ngIf="f.secondValue.errors.required">Value is required</div>
           </div>
         </div>
       </div>
-      <div *ngIf="submitted" class="text-center">
+      <div *ngIf="isSubmitted" class="text-center">
         <label>The result is - <b>{{ result }}</b></label>
       </div>
       <div class="text-center">
-        <button class="btn btn-primary mr-1" (click)="Calculate()">Calculate</button>
+        <button class="btn btn-primary mr-1" (click)="calculate()">Calculate</button>
         <button class="btn btn-primary mr-2" (click)="showHistory()">History</button>
         <button class="btn btn-secondary" type="reset" (click)="reset()">Reset</button>
 

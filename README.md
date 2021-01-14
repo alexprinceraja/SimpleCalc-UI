@@ -18,6 +18,14 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng serve` to execute the project
 
+## Functionality
+
+	1.Addition
+	2.Subtraction
+	3.Multiplication
+	4.Division
+	5.History
+	
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

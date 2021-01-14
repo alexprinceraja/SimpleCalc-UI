@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   result: any = "";
   calcHistory: Calculator[] = [];
-  submitted = false;
+  isSubmitted = false;
   simpleCalculatorForm: FormGroup = new FormGroup({
   });
 
@@ -26,12 +26,12 @@ export class AppComponent implements OnInit {
       output: []
     });
   }
-  //  getter for easy access to form fields
+  //  access to form fields
   get f() { return this.simpleCalculatorForm.controls; }
 
   // Calculate method, receive an input from UI and pass it to backend and get a response back
-  Calculate() {
-    this.submitted = true;
+  calculate() {
+    this.isSubmitted = true;
     // if form is invalid, flow will stop here 
     if (this.simpleCalculatorForm.invalid) {
       return;
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
   }
 
   reset() {
-    this.submitted = false;
+    this.isSubmitted = false;
     this.calcHistory = [];
     this.result = '';
     this.simpleCalculatorForm.reset();
