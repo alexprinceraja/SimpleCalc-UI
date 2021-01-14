@@ -41,7 +41,7 @@
       <div class="text-center">
         <button class="btn btn-primary mr-1" (click)="Calculate()">Calculate</button>
         <button class="btn btn-primary mr-2" (click)="showHistory()">History</button>
-        <button class="btn btn-secondary" type="reset" (click)="onReset()">Reset</button>
+        <button class="btn btn-secondary" type="reset" (click)="reset()">Reset</button>
 
       </div>
       <div *ngFor="let hist of calcHistory" class="text-center">
