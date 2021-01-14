@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     return true;
   }
 
-  onReset() {
+  reset() {
     this.submitted = false;
     this.calcHistory = [];
     this.result = '';
